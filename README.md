@@ -78,6 +78,11 @@ the full hand calculation is in the docstring of `metrics/tests/test_metrics.py`
 - [ ] **Phase C** — CHGNN stock run → adapter → first matrix cell (CHGNN × JPetStore)
   - [x] CHGNN cloned (`tools/chgnn` @ `f94803e`), env built (conda `CHGNN`, osx-64 under
         Rosetta), stock acme run reproduced (`runs/chgnn_acme_stock.log`)
+  - [x] Reproducibility study: 10 stock acme runs, both metric variants
+        (`runs/chgnn_acme_reproducibility.md`). CHGNN is unseeded — single runs are not
+        meaningful; cells report means over 10 runs. Paper's SM matches the repo's
+        undirected variant, but paper's IFN matches the *canonical* definition, not the
+        released `metric.py`.
 - [ ] **Phase D** — scale across datasets and remaining methods
 
 ## Team

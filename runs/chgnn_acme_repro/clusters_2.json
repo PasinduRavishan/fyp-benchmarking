@@ -1,0 +1,46 @@
+{
+    "1": [
+        "com.acmeair.web.BookingsREST",
+        "com.acmeair.mongo.services.BookingServiceImpl",
+        "com.acmeair.web.FlightsREST",
+        "com.acmeair.AcmeAirConstants",
+        "booking\"\"-res"
+    ],
+    "3": [
+        "com.acmeair.service.BookingService",
+        "com.acmeair.service.ServiceLocator",
+        "com.acmeair.config.AcmeAirConfiguration",
+        "com.acmeair.service.CustomerService",
+        "com.acmeair.mongo.services.CustomerServiceImpl",
+        "com.acmeair.web.CustomerREST",
+        "com.acmeair.web.LoginREST",
+        "com.acmeair.service.KeyGenerator",
+        "com.acmeair.web.dto.CustomerInfo",
+        "com.acmeair.config.AcmeAirConfiguration$ServiceData",
+        "com.acmeair.service.FlightService",
+        "com.acmeair.mongo.MongoConstants",
+        "com.acmeair.mongo.ConnectionManager",
+        "com.acmeair.web.dto.AddressInfo",
+        "customer\"\"-res",
+        "com.acmeair.service.ServiceLocator$2"
+    ],
+    "2": [
+        "com.acmeair.loader.BookingLoader",
+        "com.acmeair.loader.CustomerLoader",
+        "com.acmeair.mongo.services.FlightServiceImpl",
+        "com.acmeair.loader.FlightLoader",
+        "com.acmeair.AirportCodeMapping",
+        "com.acmeair.loader.Loader",
+        "com.acmeair.config.LoaderREST",
+        "com.acmeair.loader.SessionLoader",
+        "airportcodemapping\"\"-res",
+        "flight\"\"-res",
+        "flightsegment\"\"-res",
+        "com.acmeair.service.ServiceLocator$1"
+    ],
+    "0": [
+        "com.acmeair.mongo.services.AuthServiceImpl",
+        "com.acmeair.service.AuthService",
+        "customersession\"\"-res"
+    ]
+}
