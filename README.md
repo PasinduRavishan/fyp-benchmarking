@@ -71,6 +71,8 @@ the full hand calculation is in the docstring of `metrics/tests/test_metrics.py`
 - [ ] Phase A gate — validate metrics against CHGNN's published partitions/numbers
 - [ ] **Phase B** — JavaParser structural extractor + JPetStore validation
 - [ ] **Phase C** — CHGNN stock run → adapter → first matrix cell (CHGNN × JPetStore)
+  - [x] CHGNN cloned (`tools/chgnn` @ `f94803e`), env built (conda `CHGNN`, osx-64 under
+        Rosetta), stock acme run reproduced (`runs/chgnn_acme_stock.log`)
 - [ ] **Phase D** — scale across datasets and remaining methods
 
 ## Team
