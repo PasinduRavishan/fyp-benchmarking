@@ -48,6 +48,23 @@
 | NED | chgnn-repo | 1.000 | 1.000 | 1.000 | 0.000 |
 | ICP | canonical | 0.222 | 0.204 | 0.286 | 0.031 |
 
+## Interface/use-case metrics (added 2026-07-12, same 10 partitions)
+
+| metric | mean | min | max | stdev | inputs |
+|--------|------|-----|-----|-------|--------|
+| CHM | 0.4701 | 0.1854 | 0.7008 | 0.1773 | cross-partition calls + signatures from extractor `calls.csv` |
+| CHD | 0.3063 | 0.2270 | 0.4318 | 0.0876 | domain terms: camelCase tokens of method + non-JDK type names |
+| BCP | 0.7945 | 0.7945 | 0.7945 | 0.0000 | use case = web entrypoint; class labels via CALL-reachability |
+
+Definitions per the Mono2Micro paper (BCP: mean over partitions of ln(m_i),
+m_i = distinct use cases per partition) and the CHM/CHD formulations
+(pairwise Jaccard of param/return sets, resp. signature domain terms, over
+externally-invoked operations; partitions publishing <2 operations score 1.0;
+f_msg normalized to [0,1] as (J_ret+J_par)/2). BCP is constant across runs
+because entrypoint-reachability labels are coarse on a 24-class app —
+cluster-level use-case unions end up identical under every partition CHGNN
+produced.
+
 ## Observations
 
 - Far more stable than acme (SM stdev 0.010 vs 0.052): the smaller graph plus
