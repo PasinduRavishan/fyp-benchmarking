@@ -10,3 +10,4 @@ datasets/*
 tools/*
 !datasets/.gitkeep
 !tools/.gitkeep
+!datasets/COMMITS.csv

@@ -74,7 +74,11 @@ the full hand calculation is in the docstring of `metrics/tests/test_metrics.py`
       *relative* NED variant (`ned_relative`, bounds avg±50% — not the fixed [5,20]), and
       its `get_IFN` counts cross-edges per partition, not interface classes (7.0 vs our
       canonical 3.0 on acme) — record both variants when filling cells.
-- [ ] **Phase B** — JavaParser structural extractor + JPetStore validation
+- [x] **Phase B** — JavaParser structural extractor (`extractor/`, Maven, 8 unit tests on a
+      known-truth fixture) + JPetStore validation: 24 classes, 61 edges, layering spot-checks
+      pass (`outputs/graphs/jpetstore/`). Build `mvn package`, run
+      `java -jar target/extractor-0.1.0.jar <java-repo> <out-dir>` → `nodes.csv` + `edges.csv`
+      in the metrics module's format. Dataset commits pinned in `datasets/COMMITS.csv`.
 - [ ] **Phase C** — CHGNN stock run → adapter → first matrix cell (CHGNN × JPetStore)
   - [x] CHGNN cloned (`tools/chgnn` @ `f94803e`), env built (conda `CHGNN`, osx-64 under
         Rosetta), stock acme run reproduced (`runs/chgnn_acme_stock.log`)
