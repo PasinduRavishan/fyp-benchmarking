@@ -2,5 +2,3 @@ org.springframework.samples.petclinic.owner.OwnerController
 org.springframework.samples.petclinic.owner.PetController
 org.springframework.samples.petclinic.owner.VisitController
 org.springframework.samples.petclinic.vet.VetController
-org.springframework.samples.petclinic.system.CrashController
-org.springframework.samples.petclinic.system.WelcomeController

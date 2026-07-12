@@ -38,6 +38,14 @@ class TestICU:
         assert icu["A"]["usedClassesToCount"] == {"B": 2, "C": 1}
         assert icu["B"]["usedByClassesToCount"] == {"A": 2, "E": 2}
 
+    def test_inheritance_also_counts_as_usage(self):
+        # CHGNN's own acme data lists every EXTENDS/IMPLEMENTS target in the
+        # usage counts too (verified 10/10); pure-inheritance parents with a
+        # zero usage row make the GCN produce NaNs (zero struct degree).
+        icu = build_icu(NODES, EDGES)
+        assert icu["B"]["usedClassesToCount"] == {"C": 1, "A": 1}
+        assert icu["A"]["usedByClassesToCount"] == {"B": 1}
+
     def test_superclass_and_interfaces(self):
         icu = build_icu(NODES, EDGES)
         assert icu["B"]["superClass"] == "A"
@@ -50,9 +58,16 @@ class TestICU:
 
 
 class TestCallgraph:
-    def test_reachable_follows_call_edges_only(self):
-        # from E: E->B->C->D->(E). EXTENDS/FIELD must not extend the set.
-        assert reachable(EDGES, "E") == {"E", "B", "C", "D"}
+    def test_reachable_follows_call_and_field_edges(self):
+        # FIELD edges are DI wiring (Spring injects, then dispatches) so they
+        # carry reachability; EXTENDS does not (B->A must not be followed).
+        assert reachable(EDGES, "D") == {"D", "E", "B", "C"}
+        # from A: A->B CALL, A->C FIELD, then C->D->E
+        assert reachable(EDGES, "A") == {"A", "B", "C", "D", "E"}
+        # a pure FIELD link carries reachability on its own
+        assert reachable([("X", "Y", "FIELD", 1)], "X") == {"X", "Y"}
+        # EXTENDS alone does not
+        assert reachable([("X", "Y", "EXTENDS", 1)], "X") == {"X"}
 
     def test_dot_annotates_reachable_call_edges_per_entrypoint(self):
         dot = build_callgraph_dot(NODES, EDGES, ["E"])
@@ -61,6 +76,12 @@ class TestCallgraph:
         assert f'"[{ep}] B.call" -> "[{ep}] C.call"' in dot
         # A is not reachable from E: its edges must not carry E's annotation
         assert f'"[{ep}] A.call"' not in dot
+
+    def test_dot_includes_field_edges_as_links(self):
+        # A -> C is FIELD: within A's reachable set it must appear as a link
+        dot = build_callgraph_dot(NODES, EDGES, ["A"])
+        ep = "{type: web, method: GET, uri: [/A], entry: A, entrydisplayname: A.call}"
+        assert f'"[{ep}] A.call" -> "[{ep}] C.call"' in dot
 
     def test_service_json_matches_dot_annotation(self):
         service = build_service_json(["E"])

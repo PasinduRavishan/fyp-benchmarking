@@ -1,0 +1,6 @@
+org.springframework.samples.petclinic.PetClinicApplication
+org.springframework.samples.petclinic.PetClinicRuntimeHints
+org.springframework.samples.petclinic.system.CacheConfiguration
+org.springframework.samples.petclinic.system.CrashController
+org.springframework.samples.petclinic.system.WebConfiguration
+org.springframework.samples.petclinic.system.WelcomeController

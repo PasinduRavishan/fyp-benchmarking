@@ -53,10 +53,12 @@ def build_icu(nodes, edges):
     for src, dst, etype, w in edges:
         if src not in node_set or dst not in node_set:
             continue
-        if etype in ("CALL", "FIELD"):
-            used[src][dst] += w
-            used_by[dst][src] += w
-        elif etype == "EXTENDS":
+        # every edge type counts as usage: CHGNN's own acme data lists all
+        # EXTENDS/IMPLEMENTS targets in the usage counts too, and classes
+        # with a zero usage row (pure inheritance parents) NaN the GCN
+        used[src][dst] += w
+        used_by[dst][src] += w
+        if etype == "EXTENDS":
             super_class[src] = dst
         elif etype == "IMPLEMENTS":
             interfaces[src].append(dst)
@@ -80,11 +82,17 @@ def _ep_annotation(entry_class):
             "entrydisplayname: %s.call}" % (short, short, short))
 
 
+# edge types that carry call-graph reachability: real calls plus FIELD (DI
+# wiring - frameworks inject the field, then dispatch through it, and e.g.
+# Spring Data repositories receive no project-level CALL edges at all)
+_LINK_TYPES = ("CALL", "FIELD")
+
+
 def reachable(edges, root):
-    """Classes reachable from root via directed CALL edges (root included)."""
+    """Classes reachable from root via CALL/FIELD edges (root included)."""
     out = defaultdict(set)
     for src, dst, etype, _ in edges:
-        if etype == "CALL":
+        if etype in _LINK_TYPES:
             out[src].add(dst)
     seen = {root}
     stack = [root]
@@ -102,7 +110,7 @@ def build_callgraph_dot(nodes, edges, entrypoints):
         lines.append('"%s.call" -> "[%s] %s.call"' % (ep_class, ann, ep_class))
         reach = reachable(edges, ep_class)
         for src, dst, etype, _ in edges:
-            if etype == "CALL" and src in reach and dst in reach:
+            if etype in _LINK_TYPES and src in reach and dst in reach:
                 lines.append('"[%s] %s.call" -> "[%s] %s.call"'
                              % (ann, src, ann, dst))
     lines.append("}")
@@ -142,6 +150,9 @@ def main(argv=None):
     p.add_argument("--db-map", required=True,
                    help="json: {class_fqn: {table: 'CRUD letters'}}")
     p.add_argument("--seeds", required=True, help="seeds.txt to copy")
+    p.add_argument("--ignore", default=None,
+                   help="optional ignore_classes.txt to copy (classes CHGNN "
+                        "should drop, e.g. structurally isolated ones)")
     p.add_argument("--template", required=True, help="gcnconfig json to adapt")
     p.add_argument("--out", required=True, help="{name}_AE_EGCN_Separate dir")
     p.add_argument("--code", default="with_edge_loss")
@@ -173,7 +184,11 @@ def main(argv=None):
     write("temp/service.json", json.dumps(build_service_json(entrypoints), indent=1))
     write("temp/db.json", json.dumps(build_db_json(db_map), indent=1))
     write("custom/seeds.txt", "".join(seed_lines))
-    write("custom/ignore_classes.txt", "")
+    ignore = ""
+    if args.ignore:
+        with open(args.ignore) as f:
+            ignore = f.read()
+    write("custom/ignore_classes.txt", ignore)
 
     config["code"] = "_" + args.code
     config["num_clusters"] = len(seed_lines)
