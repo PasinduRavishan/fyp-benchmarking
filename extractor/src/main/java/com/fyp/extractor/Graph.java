@@ -17,6 +17,9 @@ public class Graph {
     public record MethodDecl(String className, String methodName, String returnType, List<String> parameterTypes) {}
     public record MethodCall(String srcClass, String srcMethod, String dstClass, String dstMethod) {}
 
+    public record Call(String caller, String callee, String method,
+                       String params, String returns) {}
+
     private final Set<String> nodes = new TreeSet<>();
     private final Map<Edge, Integer> weights = new LinkedHashMap<>();
     private final List<MethodDecl> methods = new ArrayList<>();

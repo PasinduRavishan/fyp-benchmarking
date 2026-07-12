@@ -57,6 +57,16 @@ computed by running the authors' own code on each result file. Our reimplementat
 | NED | chgnn-repo | 0.561 | 0.000 | 1.000 | 0.338 | 0.738 | yes (huge spread) |
 | ICP | canonical | 0.374 | 0.270 | 0.432 | 0.049 | — | — |
 
+## Interface/use-case metrics (added 2026-07-12, same 10 partitions)
+
+- **BCP: mean 2.0731 (min 1.9741, max 2.1698, stdev 0.0572).** Use case =
+  entrypoint; class labels parsed from the released callgraph.dot annotations
+  (73 labeled classes).
+- **CHM / CHD: N/A.** The released acme data contains method names but no
+  parameter or return types, so message- and domain-level operation similarity
+  cannot be computed. Recorded as N/A per the workflow rule (a finding, not a
+  failure).
+
 ## Conclusions
 
 1. **The paper's SM (0.214) is consistent with the repo's undirected SM variant**

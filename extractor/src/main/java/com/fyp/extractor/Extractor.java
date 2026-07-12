@@ -148,6 +148,17 @@ public class Extractor {
         return graph;
     }
 
+    /** Parameter type descriptions joined with ';' (CSV-safe). */
+    private static String paramTypes(
+            com.github.javaparser.resolution.declarations.ResolvedMethodLikeDeclaration m) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < m.getNumberOfParams(); i++) {
+            if (i > 0) sb.append(';');
+            sb.append(m.getParam(i).getType().describe());
+        }
+        return sb.toString();
+    }
+
     private Optional<String> resolve(ClassOrInterfaceType type) {
         try {
             return Optional.of(type.resolve().asReferenceType().getQualifiedName());
