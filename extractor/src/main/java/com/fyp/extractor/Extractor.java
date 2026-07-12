@@ -4,6 +4,8 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.FieldDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.ObjectCreationExpr;
@@ -86,12 +88,35 @@ public class Extractor {
                             resolve(t).ifPresent(fqn -> graph.addEdge(self, fqn, "FIELD", 1)));
                 }
 
+                // Extract all method declarations inside this class
+                td.findAll(MethodDeclaration.class).forEach(md -> {
+                    String methodName = md.getNameAsString();
+                    String returnType = resolveType(md.getType());
+                    List<String> params = new ArrayList<>();
+                    for (Parameter p : md.getParameters()) {
+                        params.add(resolveType(p.getType()));
+                    }
+                    graph.addMethod(self, methodName, returnType, params);
+                });
+
                 td.findAll(MethodCallExpr.class).forEach(call -> {
                     totalCalls++;
                     try {
-                        ResolvedReferenceTypeDeclaration decl =
-                                call.resolve().declaringType();
-                        graph.addEdge(self, decl.getQualifiedName(), "CALL", 1);
+                        var resolved = call.resolve();
+                        String dstClass = resolved.declaringType().getQualifiedName();
+                        String dstMethod = resolved.getName();
+
+                        String srcMethod = "unknown";
+                        com.github.javaparser.ast.Node parent = call.getParentNode().orElse(null);
+                        while (parent != null) {
+                            if (parent instanceof MethodDeclaration md) {
+                                srcMethod = md.getNameAsString();
+                                break;
+                            }
+                            parent = parent.getParentNode().orElse(null);
+                        }
+                        graph.addMethodCall(self, srcMethod, dstClass, dstMethod);
+                        graph.addEdge(self, dstClass, "CALL", 1);
                     } catch (RuntimeException e) {
                         unresolvedCalls++;
                     }
@@ -99,8 +124,21 @@ public class Extractor {
                 td.findAll(ObjectCreationExpr.class).forEach(call -> {
                     totalCalls++;
                     try {
-                        graph.addEdge(self,
-                                call.resolve().declaringType().getQualifiedName(), "CALL", 1);
+                        var resolved = call.resolve();
+                        String dstClass = resolved.declaringType().getQualifiedName();
+                        String dstMethod = "<init>";
+
+                        String srcMethod = "unknown";
+                        com.github.javaparser.ast.Node parent = call.getParentNode().orElse(null);
+                        while (parent != null) {
+                            if (parent instanceof MethodDeclaration md) {
+                                srcMethod = md.getNameAsString();
+                                break;
+                            }
+                            parent = parent.getParentNode().orElse(null);
+                        }
+                        graph.addMethodCall(self, srcMethod, dstClass, dstMethod);
+                        graph.addEdge(self, dstClass, "CALL", 1);
                     } catch (RuntimeException e) {
                         unresolvedCalls++;
                     }
@@ -115,6 +153,14 @@ public class Extractor {
             return Optional.of(type.resolve().asReferenceType().getQualifiedName());
         } catch (RuntimeException e) {
             return Optional.empty();
+        }
+    }
+
+    private String resolveType(com.github.javaparser.ast.type.Type type) {
+        try {
+            return type.resolve().describe();
+        } catch (Exception e) {
+            return type.asString();
         }
     }
 
@@ -139,3 +185,4 @@ public class Extractor {
         }
     }
 }
+

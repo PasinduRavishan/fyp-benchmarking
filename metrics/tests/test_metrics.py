@@ -216,3 +216,85 @@ class TestFileIO:
         assert result["ICP"] == pytest.approx(3 / 7)
         assert result["IFN"] == pytest.approx(1.0)
         assert result["NED"] == pytest.approx(0.0)
+
+
+class TestCHM_CHD_BCP:
+    def test_chm_chd_hand_computed(self):
+        from metrics.metrics import compute_chm_chd
+        
+        partition = {
+            "A": 0, "B": 0, "C": 0,
+            "D": 1, "E": 1
+        }
+        
+        methods_by_class = {
+            "B": [
+                {"name": "m2", "returnType": "int", "parameters": ["java.lang.String"]},
+                {"name": "m3", "returnType": "int", "parameters": ["int"]}
+            ],
+            "D": [
+                {"name": "m4", "returnType": "void", "parameters": ["int"]}
+            ]
+        }
+        
+        method_calls = [
+            {"srcClass": "D", "srcMethod": "unknown", "dstClass": "B", "dstMethod": "m2"},
+            {"srcClass": "E", "srcMethod": "unknown", "dstClass": "B", "dstMethod": "m3"},
+            {"srcClass": "C", "srcMethod": "unknown", "dstClass": "D", "dstMethod": "m4"}
+        ]
+        
+        chm, chd = compute_chm_chd(partition, methods_by_class, method_calls)
+        
+        # Cluster 0 has O_0 = {(B, m2), (B, m3)}
+        # f_msg(m2, m3) = 0.5 * (jaccard({'int'}, {'int'}) + jaccard({'java.lang.String'}, {'int'}))
+        #               = 0.5 * (1.0 + 0.0) = 0.5. So chm_0 = 0.5.
+        # Cluster 1 has O_1 = {(D, m4)}. Since |O_1| = 1, chm_1 = 1.0.
+        # Average CHM = (0.5 + 1.0) / 2 = 0.75
+        assert chm == pytest.approx(0.75)
+        
+        # For CHD:
+        # terms(m2) = {'m2'} (java, lang, string, int filtered out)
+        # terms(m3) = {'m3'}
+        # jaccard({'m2'}, {'m3'}) = 0.0. So chd_0 = 0.0.
+        # chd_1 = 1.0.
+        # Average CHD = (0.0 + 1.0) / 2 = 0.5
+        assert chd == pytest.approx(0.5)
+
+    def test_bcp_hand_computed(self):
+        from metrics.metrics import compute_bcp
+        
+        partition = {
+            "AController": 0, "B": 0, "CController": 0,
+            "D": 1, "E": 1
+        }
+        
+        edges = [
+            Edge("AController", "B", "CALL"),
+            Edge("B", "CController", "CALL"),
+            Edge("D", "E", "CALL"),
+            Edge("CController", "D", "CALL"),
+            Edge("E", "B", "CALL")
+        ]
+        
+        # Reachable from AController: AController, B, CController, D, E
+        # Reachable from CController: CController, D, E, B
+        # Use cases for classes:
+        # AController: {AController}
+        # B: {AController, CController}
+        # CController: {AController, CController}
+        # D: {AController, CController}
+        # E: {AController, CController}
+        #
+        # Cluster 0 (AController, B, CController) use cases: {AController, CController} -> m_0 = 2 -> bcp_uni_0 = log2(2) = 1.0
+        # Counts in Cluster 0: AController (3 times reached), CController (2 times reached) -> total 5
+        # Entropy: -0.6 * log2(0.6) - 0.4 * log2(0.4) = 0.97095
+        #
+        # Cluster 1 (D, E) use cases: {AController, CController} -> m_1 = 2 -> bcp_uni_1 = log2(2) = 1.0
+        # Counts in Cluster 1: AController (2 times reached), CController (2 times reached) -> total 4 -> p = 0.5, 0.5
+        # Entropy: 1.0
+        #
+        # Averages: uniform = 1.0, entropy = 0.985475
+        uni, ent = compute_bcp(partition, edges)
+        assert uni == pytest.approx(1.0)
+        assert ent == pytest.approx(0.9854753, abs=1e-6)
+
