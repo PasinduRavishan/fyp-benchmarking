@@ -79,7 +79,7 @@ the full hand calculation is in the docstring of `metrics/tests/test_metrics.py`
       pass (`outputs/graphs/jpetstore/`). Build `mvn package`, run
       `java -jar target/extractor-0.1.0.jar <java-repo> <out-dir>` → `nodes.csv` + `edges.csv`
       in the metrics module's format. Dataset commits pinned in `datasets/COMMITS.csv`.
-- [ ] **Phase C** — CHGNN stock run → adapter → first matrix cell (CHGNN × JPetStore)
+- [x] **Phase C** — CHGNN stock run → adapter → first matrix cell (CHGNN × JPetStore)
   - [x] CHGNN cloned (`tools/chgnn` @ `f94803e`), env built (conda `CHGNN`, osx-64 under
         Rosetta), stock acme run reproduced (`runs/chgnn_acme_stock.log`)
   - [x] Reproducibility study: 10 stock acme runs, both metric variants
@@ -87,6 +87,10 @@ the full hand calculation is in the docstring of `metrics/tests/test_metrics.py`
         meaningful; cells report means over 10 runs. Paper's SM matches the repo's
         undirected variant, but paper's IFN matches the *canonical* definition, not the
         released `metric.py`.
+  - [x] **First matrix cell filled: CHGNN × JPetStore** — extractor → `chgnn_adapter.py`
+        → 10 runs → both metric variants in `results.csv`
+        (`runs/chgnn_jpetstore_repro.md`). SM 0.172 canonical / 0.291 chgnn-repo,
+        IFN 1.98, NED 0.99, ICP 0.22 (means, n=10).
 - [ ] **Phase D** — scale across datasets and remaining methods
 
 ## Team
