@@ -18,6 +18,22 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 - *canonical*: mean of 10 unseeded stock runs; spread in runs/chgnn_acme_reproducibility.md; published IFN matches THIS variant; CHM/CHD N/A: released acme data has no param/return types; BCP use case = entrypoint from released callgraph.dot annotations
 - *chgnn-repo*: mean of 10 unseeded stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py; published SM matches THIS variant
 
+## CHGNN × daytrader
+*dataset commit: `bundled@f94803e` · date: 2026-07-13*
+
+| metric | canonical | chgnn-repo | published |
+|---|---|---|---|
+| SM ↑ | 0.0883 | 0.1632 | — |
+| ICP ↓ | 0.5636 | — | — |
+| IFN ↓ | 5.53 | 25.05 | — |
+| NED ↑ | 0.507 | 0.555 | — |
+| BCP ↓ | 4.4972 | — | — |
+| CHM ↑ | — | — | — |
+| CHD ↑ | — | — | — |
+
+- *canonical*: mean of 10 stock runs on authors' bundled inputs; authors' own results.txt (5 runs): IFN 5.7-6.7 matches THIS IFN variant and NED 0.48-0.63 matches; their recorded SM 0.014-0.056 is below both our variants - open question
+- *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
+
 ## CHGNN × jpetstore
 *dataset commit: `ebbd98ae92271c8dfa951d2fef518ba12877bf53` · date: 2026-07-12*
 
@@ -32,5 +48,21 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 | CHD ↑ | 0.3063 | — | — |
 
 - *canonical*: mean of 10 stock runs; first filled cell; protocol+seeds in runs/chgnn_jpetstore_repro.md; BCP use case = web entrypoint (reachability); CHM/CHD over cross-partition calls from extractor calls.csv
+- *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
+
+## CHGNN × plantsbywebsphere
+*dataset commit: `bundled@f94803e` · date: 2026-07-13*
+
+| metric | canonical | chgnn-repo | published |
+|---|---|---|---|
+| SM ↑ | 0.1625 | 0.2674 | — |
+| ICP ↓ | 0.5052 | — | — |
+| IFN ↓ | 3.88 | 10.26 | — |
+| NED ↑ | 0.869 | 0.858 | — |
+| BCP ↓ | 2.5881 | — | — |
+| CHM ↑ | — | — | — |
+| CHD ↑ | — | — | — |
+
+- *canonical*: mean of 10 stock runs on authors' bundled pbw inputs; CHM/CHD N/A (no signatures in bundled data); BCP from callgraph.dot entrypoint labels
 - *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
 

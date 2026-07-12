@@ -97,7 +97,13 @@ the full hand calculation is in the docstring of `metrics/tests/test_metrics.py`
         → 10 runs → both metric variants in `results.csv`
         (`runs/chgnn_jpetstore_repro.md`). SM 0.172 canonical / 0.291 chgnn-repo,
         IFN 1.98, NED 0.99, ICP 0.22 (means, n=10).
-- [ ] **Phase D** — scale across datasets and remaining methods
+- [ ] **Phase D** — scale across datasets and remaining methods (in progress)
+  - [x] CHGNN × DayTrader + PlantsByWebSphere (authors' bundled inputs, 10 runs each,
+        `runs/chgnn_tier1_bundled.md`). DayTrader cross-check vs authors' own
+        results.txt: IFN + NED align (with canonical IFN), their recorded SM does not —
+        documented open question.
+  - [ ] CHGNN × AcmeAir (f161227) + Spring-PetClinic (51045d1) — configs ready, runs in
+        progress. Note: paper's acme ≠ this AcmeAir variant (38 vs 84 classes).
 
 ## Team
 
