@@ -1,3 +1,4 @@
 dataset,repo,commit
 jpetstore,https://github.com/mybatis/jpetstore-6,ebbd98ae92271c8dfa951d2fef518ba12877bf53
 spring-petclinic,https://github.com/spring-projects/spring-petclinic,51045d1648dad955df586150c1a1a6e22ef400c2
+jforum,https://github.com/jforum/jakarta.git,f7bbe276bfb055053d730d465b9cc54bd50a7938
