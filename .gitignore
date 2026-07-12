@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+.venv/
+venv/
+
+# cloned external repos are pinned by commit in results.csv, not vendored
+datasets/*
+tools/*
+!datasets/.gitkeep
+!tools/.gitkeep
