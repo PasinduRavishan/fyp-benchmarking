@@ -51,7 +51,7 @@ def main(argv=None):
     node_to_idx = {node: i for i, node in enumerate(nodes)}
 
     # 1. Identify entrypoints
-    entrypoints = sorted([n for n in nodes if n.lower().endswith("controller")])
+    entrypoints = sorted([n for n in nodes if n.lower().endswith("controller") or n.lower().endswith("action")])
     n_entrypoints = len(entrypoints)
     ep_to_idx = {ep: i for i, ep in enumerate(entrypoints)}
 
