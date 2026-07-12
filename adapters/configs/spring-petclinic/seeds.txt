@@ -1,0 +1,3 @@
+owners-res, pets-res, types-res, org.springframework.samples.petclinic.owner.OwnerRepository
+visits-res, org.springframework.samples.petclinic.owner.Visit
+vets-res, specialties-res, org.springframework.samples.petclinic.vet.VetRepository
