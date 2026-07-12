@@ -44,6 +44,7 @@ from metrics.metrics import (
     load_edges_csv,
     load_partition_json,
     ned,
+    ned_relative,
     sm,
 )
 
@@ -112,6 +113,79 @@ class TestNED:
         # one partition of 6 classes with hi=5 -> all extreme.
         partition = {f"C{i}": 0 for i in range(6)}
         assert ned(partition, lo=1, hi=5) == pytest.approx(0.0)
+
+
+class TestSMUndirected:
+    """CHGNN's metric.py treats the graph as UNDIRECTED and unweighted:
+    reciprocal edges collapse to one pair, mu_k counts each intra pair
+    TWICE (networkx subgraph edges * 2) while sigma_ij counts each cross
+    pair ONCE. Validated against tools/chgnn/metric.py on the acme run.
+
+    Tiny example, undirected pairs: AB, BC, DE, CD, EB.
+    mu_0 = 2*2 = 4, mu_1 = 2*1 = 2, sigma_01 = 2.
+    SM = 1/2 * (4/9 + 2/4) - 2/(2*3*2) = 17/36 - 1/6 = 11/36
+    """
+
+    def test_hand_computed_example(self):
+        assert sm(PARTITION, EDGES, undirected=True) == pytest.approx(11 / 36)
+
+    def test_reciprocal_edges_collapse(self):
+        partition = {"A": 0, "B": 0}
+        edges = [Edge("A", "B", "CALL", 1.0), Edge("B", "A", "CALL", 1.0)]
+        # one undirected pair, mu = 2 -> SM = 2/4
+        assert sm(partition, edges, undirected=True) == pytest.approx(0.5)
+
+
+class TestNEDRelative:
+    """CHGNN's NED variant: non-extreme means
+    floor(avg*(1-eps)) <= size <= ceil(avg*(1+eps)), default eps=0.5."""
+
+    def test_all_within_relative_bounds(self):
+        # sizes 3,2: avg 2.5, eps 0.5 -> bounds [1, 4] -> all classes fine
+        assert ned_relative(PARTITION) == pytest.approx(1.0)
+
+    def test_tight_eps_all_extreme(self):
+        # sizes 4,1: avg 2.5, eps 0.2 -> bounds [2, 3] -> all 5 extreme
+        partition = {"A": 0, "B": 0, "C": 0, "D": 0, "E": 1}
+        assert ned_relative(partition, eps=0.2) == pytest.approx(0.0)
+
+
+class TestCHGNNValidationGate:
+    """VALIDATION GATE (CLAUDE.md): our implementation must reproduce
+    tools/chgnn/metric.py exactly on the real acme run output.
+    Expected values below were produced by running CHGNN's own
+    get_structural_modularity / get_ned on this exact fixture."""
+
+    @pytest.fixture
+    def acme(self):
+        import os
+        path = os.path.join(os.path.dirname(__file__), "fixtures", "chgnn_acme_result.json")
+        with open(path) as f:
+            d = json.load(f)
+        id2label = {n["id"]: n["label"] for n in d["nodes"]}
+        partition = {
+            id2label[nid]: ci
+            for ci, c in enumerate(d["clusters"])
+            for nid in c["nodes"]
+        }
+        edges = [
+            Edge(id2label[r["id"].split("_")[0]], id2label[r["id"].split("_")[1]], "CALL", 1.0)
+            for block in d["edges"]
+            for r in block["relationship"]
+        ]
+        return partition, edges
+
+    def test_sm_matches_chgnn(self, acme):
+        partition, edges = acme
+        assert sm(partition, edges, undirected=True) == pytest.approx(
+            0.2015674603174603, abs=1e-12
+        )
+
+    def test_ned_matches_chgnn(self, acme):
+        partition, _ = acme
+        assert ned_relative(partition) == pytest.approx(
+            0.5833333333333334, abs=1e-12
+        )
 
 
 class TestFileIO:

@@ -10,6 +10,7 @@ Inputs:
 
 import csv
 import json
+import math
 from dataclasses import dataclass
 from itertools import combinations
 
@@ -30,14 +31,22 @@ def _clusters(partition):
     return clusters
 
 
-def sm(partition, edges):
+def sm(partition, edges, undirected=False):
     """Structural Modularity. Edge COUNTS (unweighted), all edge types.
 
     SM = (1/K) * sum_k(mu_k / N_k^2)
          - (1/(K(K-1)/2)) * sum_{i<j}(sigma_ij / (2 * N_i * N_j))
+
+    undirected=True reproduces CHGNN's metric.py (validated on its acme
+    run): edges collapse to unordered pairs (self-loops dropped), each
+    intra pair counts TWICE in mu_k, each cross pair ONCE in sigma_ij.
     """
     clusters = _clusters(partition)
     K = len(clusters)
+
+    if undirected:
+        pairs = {frozenset((e.src, e.dst)) for e in edges if e.src != e.dst}
+        edges = [Edge(*sorted(p), "UND", 1.0) for p in pairs]
 
     mu = {cid: 0 for cid in clusters}          # intra-edge counts
     sigma = {}                                  # {frozenset({i,j}): count}
@@ -46,7 +55,7 @@ def sm(partition, edges):
         if ci is None or cj is None:
             continue
         if ci == cj:
-            mu[ci] += 1
+            mu[ci] += 2 if undirected else 1
         else:
             key = frozenset((ci, cj))
             sigma[key] = sigma.get(key, 0) + 1
@@ -108,6 +117,18 @@ def ned(partition, lo=5, hi=20):
         if not lo <= len(members) <= hi
     )
     return 1 - extreme / total
+
+
+def ned_relative(partition, eps=0.5):
+    """CHGNN's NED variant (tools/chgnn/metric.py get_ned): a partition is
+    non-extreme if floor(avg*(1-eps)) <= size <= ceil(avg*(1+eps)), where
+    avg is the mean partition size. Differs from the fixed-bounds ned()
+    above — record both when scoring (see CLAUDE.md)."""
+    clusters = _clusters(partition)
+    sizes = [len(m) for m in clusters.values()]
+    avg = sum(sizes) / len(sizes)
+    lo, hi = math.floor(avg * (1 - eps)), math.ceil(avg * (1 + eps))
+    return sum(s for s in sizes if lo <= s <= hi) / len(partition)
 
 
 def load_partition_json(path):

@@ -68,7 +68,12 @@ the full hand calculation is in the docstring of `metrics/tests/test_metrics.py`
 ## Status
 
 - [x] **Phase A** — repo skeleton + metrics module + unit tests
-- [ ] Phase A gate — validate metrics against CHGNN's published partitions/numbers
+- [x] Phase A gate — our SM/NED reproduce `tools/chgnn/metric.py` **exactly** (1e-12) on
+      the real acme run output (pinned regression fixture in `metrics/tests/fixtures/`).
+      Findings: CHGNN treats the graph as undirected (`sm(..., undirected=True)`), uses a
+      *relative* NED variant (`ned_relative`, bounds avg±50% — not the fixed [5,20]), and
+      its `get_IFN` counts cross-edges per partition, not interface classes (7.0 vs our
+      canonical 3.0 on acme) — record both variants when filling cells.
 - [ ] **Phase B** — JavaParser structural extractor + JPetStore validation
 - [ ] **Phase C** — CHGNN stock run → adapter → first matrix cell (CHGNN × JPetStore)
   - [x] CHGNN cloned (`tools/chgnn` @ `f94803e`), env built (conda `CHGNN`, osx-64 under
