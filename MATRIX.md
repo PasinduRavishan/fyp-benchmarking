@@ -18,6 +18,22 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 - *canonical*: mean of 10 unseeded stock runs; spread in runs/chgnn_acme_reproducibility.md; published IFN matches THIS variant; CHM/CHD N/A: released acme data has no param/return types; BCP use case = entrypoint from released callgraph.dot annotations
 - *chgnn-repo*: mean of 10 unseeded stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py; published SM matches THIS variant
 
+## CHGNN × acmeair
+*dataset commit: `f16122729873ef0449ea276dfb2d2a1d45bebb40` · date: 2026-07-13*
+
+| metric | canonical | chgnn-repo | published |
+|---|---|---|---|
+| SM ↑ | 0.0683 | 0.1544 | — |
+| ICP ↓ | 0.3759 | — | — |
+| IFN ↓ | 5.43 | 12.88 | — |
+| NED ↑ | 0.652 | 0.844 | — |
+| BCP ↓ | 1.0813 | — | — |
+| CHM ↑ | 0.3469 | — | — |
+| CHD ↑ | 0.1824 | — | — |
+
+- *canonical*: mean of 10 stock runs; OUR full pipeline (extractor+adapter); NOT comparable to paper's acme (different AcmeAir variant: 84 vs 38 classes); protocol in runs/chgnn_tier2_pipeline.md
+- *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
+
 ## CHGNN × daytrader
 *dataset commit: `bundled@f94803e` · date: 2026-07-13*
 
@@ -64,5 +80,21 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 | CHD ↑ | — | — | — |
 
 - *canonical*: mean of 10 stock runs on authors' bundled pbw inputs; CHM/CHD N/A (no signatures in bundled data); BCP from callgraph.dot entrypoint labels
+- *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
+
+## CHGNN × spring-petclinic
+*dataset commit: `51045d1648dad955df586150c1a1a6e22ef400c2` · date: 2026-07-13*
+
+| metric | canonical | chgnn-repo | published |
+|---|---|---|---|
+| SM ↑ | 0.1787 | 0.2616 | — |
+| ICP ↓ | 0.1702 | — | — |
+| IFN ↓ | 1.67 | 2.30 | — |
+| NED ↑ | 0.971 | 0.867 | — |
+| BCP ↓ | 0.7420 | — | — |
+| CHM ↑ | 0.7000 | — | — |
+| CHD ↑ | 0.7429 | — | — |
+
+- *canonical*: mean of 10 stock runs; OUR full pipeline; 6 isolated bootstrap/config classes excluded via ignore_classes.txt; sparse-graph caveat in runs/chgnn_tier2_pipeline.md
 - *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
 

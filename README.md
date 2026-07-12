@@ -102,8 +102,10 @@ the full hand calculation is in the docstring of `metrics/tests/test_metrics.py`
         `runs/chgnn_tier1_bundled.md`). DayTrader cross-check vs authors' own
         results.txt: IFN + NED align (with canonical IFN), their recorded SM does not —
         documented open question.
-  - [ ] CHGNN × AcmeAir (f161227) + Spring-PetClinic (51045d1) — configs ready, runs in
-        progress. Note: paper's acme ≠ this AcmeAir variant (38 vs 84 classes).
+  - [x] CHGNN × AcmeAir (f161227) + Spring-PetClinic (51045d1) — first cells from OUR
+        full pipeline (extractor → adapter → 10 runs → all 7 metrics),
+        `runs/chgnn_tier2_pipeline.md`. Note: paper's acme ≠ this AcmeAir variant
+        (38 vs 84 classes). **CHGNN row: 6 cells filled.**
 
 ## Team
 

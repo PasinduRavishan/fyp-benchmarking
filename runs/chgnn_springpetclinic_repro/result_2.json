@@ -1,0 +1,602 @@
+{
+    "clusters": [
+        {
+            "type": "microservices_group",
+            "label": "1",
+            "id": "17838906888313238789816320",
+            "nodes": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11"
+            ]
+        },
+        {
+            "type": "microservices_group",
+            "label": "2",
+            "id": "17838906888313868002525184",
+            "nodes": [
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18"
+            ]
+        },
+        {
+            "type": "microservices_group",
+            "label": "0",
+            "id": "17838906888313880887427072",
+            "nodes": [
+                "19",
+                "20",
+                "21",
+                "22",
+                "23"
+            ]
+        }
+    ],
+    "edges": [
+        {
+            "type": "inter_class_connections",
+            "weight": "1",
+            "relationship": [
+                {
+                    "label": "icu",
+                    "id": "20_19",
+                    "properties": {
+                        "start": "20",
+                        "end": "19"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "21_19",
+                    "properties": {
+                        "start": "21",
+                        "end": "19"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "11_19",
+                    "properties": {
+                        "start": "11",
+                        "end": "19"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "23_22",
+                    "properties": {
+                        "start": "23",
+                        "end": "22"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "17_16",
+                    "properties": {
+                        "start": "17",
+                        "end": "16"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "18_16",
+                    "properties": {
+                        "start": "18",
+                        "end": "16"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "1_0",
+                    "properties": {
+                        "start": "1",
+                        "end": "0"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "2_0",
+                    "properties": {
+                        "start": "2",
+                        "end": "0"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "3_0",
+                    "properties": {
+                        "start": "3",
+                        "end": "0"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "3_1",
+                    "properties": {
+                        "start": "3",
+                        "end": "1"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "3_2",
+                    "properties": {
+                        "start": "3",
+                        "end": "2"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "3_8",
+                    "properties": {
+                        "start": "3",
+                        "end": "8"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "4_0",
+                    "properties": {
+                        "start": "4",
+                        "end": "0"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "4_2",
+                    "properties": {
+                        "start": "4",
+                        "end": "2"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "4_3",
+                    "properties": {
+                        "start": "4",
+                        "end": "3"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "4_19",
+                    "properties": {
+                        "start": "4",
+                        "end": "19"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "19_20",
+                    "properties": {
+                        "start": "19",
+                        "end": "20"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "19_21",
+                    "properties": {
+                        "start": "19",
+                        "end": "21"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "19_11",
+                    "properties": {
+                        "start": "19",
+                        "end": "11"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "8_1",
+                    "properties": {
+                        "start": "8",
+                        "end": "1"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "8_9",
+                    "properties": {
+                        "start": "8",
+                        "end": "9"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "8_7",
+                    "properties": {
+                        "start": "8",
+                        "end": "7"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "5_0",
+                    "properties": {
+                        "start": "5",
+                        "end": "0"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "5_1",
+                    "properties": {
+                        "start": "5",
+                        "end": "1"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "5_3",
+                    "properties": {
+                        "start": "5",
+                        "end": "3"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "5_19",
+                    "properties": {
+                        "start": "5",
+                        "end": "19"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "5_8",
+                    "properties": {
+                        "start": "5",
+                        "end": "8"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "5_22",
+                    "properties": {
+                        "start": "5",
+                        "end": "22"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "5_6",
+                    "properties": {
+                        "start": "5",
+                        "end": "6"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "9_1",
+                    "properties": {
+                        "start": "9",
+                        "end": "1"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "22_23",
+                    "properties": {
+                        "start": "22",
+                        "end": "23"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "6_0",
+                    "properties": {
+                        "start": "6",
+                        "end": "0"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "6_1",
+                    "properties": {
+                        "start": "6",
+                        "end": "1"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "6_8",
+                    "properties": {
+                        "start": "6",
+                        "end": "8"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "7_0",
+                    "properties": {
+                        "start": "7",
+                        "end": "0"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "10_3",
+                    "properties": {
+                        "start": "10",
+                        "end": "3"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "10_19",
+                    "properties": {
+                        "start": "10",
+                        "end": "19"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "10_8",
+                    "properties": {
+                        "start": "10",
+                        "end": "8"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "10_7",
+                    "properties": {
+                        "start": "10",
+                        "end": "7"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "12_1",
+                    "properties": {
+                        "start": "12",
+                        "end": "1"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "13_2",
+                    "properties": {
+                        "start": "13",
+                        "end": "2"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "13_12",
+                    "properties": {
+                        "start": "13",
+                        "end": "12"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "15_16",
+                    "properties": {
+                        "start": "15",
+                        "end": "16"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "15_14",
+                    "properties": {
+                        "start": "15",
+                        "end": "14"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "16_17",
+                    "properties": {
+                        "start": "16",
+                        "end": "17"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "16_18",
+                    "properties": {
+                        "start": "16",
+                        "end": "18"
+                    },
+                    "frequency": "1"
+                },
+                {
+                    "label": "icu",
+                    "id": "14_13",
+                    "properties": {
+                        "start": "14",
+                        "end": "13"
+                    },
+                    "frequency": "1"
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.model.BaseEntity",
+            "id": "0"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.model.NamedEntity",
+            "id": "1"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.model.Person",
+            "id": "2"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.owner.Owner",
+            "id": "3"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.owner.OwnerController",
+            "id": "4"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.owner.PetController",
+            "id": "5"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.owner.PetValidator",
+            "id": "6"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.owner.Visit",
+            "id": "7"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.owner.Pet",
+            "id": "8"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.owner.PetType",
+            "id": "9"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.owner.VisitController",
+            "id": "10"
+        },
+        {
+            "entity_type": "class",
+            "label": "visits-res",
+            "id": "11"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.vet.Specialty",
+            "id": "12"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.vet.Vet",
+            "id": "13"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.vet.Vets",
+            "id": "14"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.vet.VetController",
+            "id": "15"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.vet.VetRepository",
+            "id": "16"
+        },
+        {
+            "entity_type": "class",
+            "label": "vets-res",
+            "id": "17"
+        },
+        {
+            "entity_type": "class",
+            "label": "specialties-res",
+            "id": "18"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.owner.OwnerRepository",
+            "id": "19"
+        },
+        {
+            "entity_type": "class",
+            "label": "owners-res",
+            "id": "20"
+        },
+        {
+            "entity_type": "class",
+            "label": "pets-res",
+            "id": "21"
+        },
+        {
+            "entity_type": "class",
+            "label": "org.springframework.samples.petclinic.owner.PetTypeRepository",
+            "id": "22"
+        },
+        {
+            "entity_type": "class",
+            "label": "types-res",
+            "id": "23"
+        }
+    ]
+}
