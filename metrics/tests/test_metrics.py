@@ -38,6 +38,10 @@ import json
 
 from metrics.metrics import (
     Edge,
+    Operation,
+    bcp,
+    chd,
+    chm,
     compute_all,
     icp,
     ifn,
@@ -186,6 +190,93 @@ class TestCHGNNValidationGate:
         assert ned_relative(partition) == pytest.approx(
             0.5833333333333334, abs=1e-12
         )
+
+
+class TestCHM:
+    """CHM (Cohesion at Message level): per partition, mean pairwise
+    f_msg over externally-invoked operations, where
+    f_msg = (Jaccard(returns) + Jaccard(params)) / 2, normalized to [0,1].
+    Partitions with fewer than 2 published operations score 1.0.
+
+    Hand example: P0={A,B}, P1={C}. C calls A.f(int,String)->Product and
+    B.g(int)->Product; nothing calls into P1.
+      pair (f,g): J(par) = |{int}|/|{int,String}| = 1/2; J(ret) = 1/1 = 1
+      f_msg = (0.5+1)/2 = 0.75 -> chm_0 = 0.75, chm_1 = 1.0, CHM = 0.875
+    """
+
+    PARTITION = {"A": 0, "B": 0, "C": 1}
+    CALLS = [
+        ("C", Operation("A", "f", ("int", "String"), "Product")),
+        ("C", Operation("B", "g", ("int",), "Product")),
+    ]
+
+    def test_hand_computed_example(self):
+        assert chm(self.PARTITION, self.CALLS) == pytest.approx(0.875)
+
+    def test_internal_calls_do_not_publish_operations(self):
+        calls = self.CALLS + [("A", Operation("B", "h", (), "void"))]
+        # B.h is only called from inside P0 -> not part of the interface
+        assert chm(self.PARTITION, calls) == pytest.approx(0.875)
+
+    def test_identical_signatures_are_fully_cohesive(self):
+        calls = [
+            ("C", Operation("A", "f", ("int",), "Product")),
+            ("C", Operation("B", "g", ("int",), "Product")),
+        ]
+        assert chm(self.PARTITION, calls) == pytest.approx(1.0)
+
+
+class TestCHD:
+    """CHD (Cohesion at Domain level): same aggregation, f_dom = Jaccard of
+    domain terms (camelCase tokens of method name + non-JDK type names).
+
+    Hand example: ops addProduct() and removeProduct() published by P0:
+      terms {add,product} vs {remove,product} -> J = 1/3
+      chd_0 = 1/3, chd_1 = 1.0, CHD = 2/3
+    """
+
+    PARTITION = {"A": 0, "B": 0, "C": 1}
+    CALLS = [
+        ("C", Operation("A", "addProduct", (), "void")),
+        ("C", Operation("B", "removeProduct", (), "void")),
+    ]
+
+    def test_hand_computed_example(self):
+        assert chd(self.PARTITION, self.CALLS) == pytest.approx(2 / 3)
+
+    def test_domain_type_names_contribute_terms(self):
+        calls = [
+            ("C", Operation("A", "add", ("Product",), "void")),
+            ("C", Operation("B", "remove", ("Product",), "void")),
+        ]
+        # terms {add,product} vs {remove,product} -> same 1/3 -> CHD = 2/3
+        assert chd(self.PARTITION, calls) == pytest.approx(2 / 3)
+
+    def test_jdk_types_are_not_domain_terms(self):
+        calls = [
+            ("C", Operation("A", "addProduct", ("String", "int"), "void")),
+            ("C", Operation("B", "removeProduct", ("List",), "void")),
+        ]
+        assert chd(self.PARTITION, calls) == pytest.approx(2 / 3)
+
+
+class TestBCP:
+    """BCP: average over partitions of the entropy of a uniform distribution
+    over the partition's use cases: bcp_i = ln(m_i), m_i = |union of use-case
+    labels of member classes|. Lower is better.
+
+    Hand example: P0 = {A:{UC1}, B:{UC1,UC2}} -> m_0 = 2 -> bcp_0 = ln 2.
+    P1 = {C:{UC1}} -> m_1 = 1 -> bcp_1 = 0. BCP = ln(2)/2 ~ 0.34657
+    """
+
+    def test_hand_computed_example(self):
+        import math
+        partition = {"A": 0, "B": 0, "C": 1}
+        usecases = {"A": {"UC1"}, "B": {"UC1", "UC2"}, "C": {"UC1"}}
+        assert bcp(partition, usecases) == pytest.approx(math.log(2) / 2)
+
+    def test_no_usecases_scores_zero(self):
+        assert bcp({"A": 0}, {"A": set()}) == 0.0
 
 
 class TestFileIO:

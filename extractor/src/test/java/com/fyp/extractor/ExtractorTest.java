@@ -83,4 +83,19 @@ class ExtractorTest {
         assertTrue(edges.contains("com.shop.Cart,com.shop.ProductRepo,CALL,2"));
         assertEquals(6, edges.size()); // header + 5 edges
     }
+
+    @Test
+    void writesCallsCsvWithCalleeSignatures() throws Exception {
+        Path out = Files.createTempDirectory("extractor-test");
+        graph.writeCsv(out);
+        List<String> calls = Files.readAllLines(out.resolve("calls.csv"));
+        assertEquals("caller,callee,method,params,returns", calls.get(0));
+        // Cart calls ProductRepo.find(int) -> Product, twice (2 rows)
+        long findCalls = calls.stream().filter(l -> l.equals(
+                "com.shop.Cart,com.shop.ProductRepo,find,int,com.shop.Product")).count();
+        assertEquals(2, findCalls);
+        // constructor call recorded with method <init> and void-style return
+        assertTrue(calls.contains(
+                "com.shop.ProductRepo,com.shop.Product,<init>,,com.shop.Product"));
+    }
 }

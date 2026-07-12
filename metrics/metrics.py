@@ -131,6 +131,101 @@ def ned_relative(partition, eps=0.5):
     return sum(s for s in sizes if lo <= s <= hi) / len(partition)
 
 
+@dataclass(frozen=True)
+class Operation:
+    """A callee method: owning class FQN, name, parameter types, return type."""
+    cls: str
+    name: str
+    params: tuple
+    returns: str
+
+
+# Type-name tokens that are not domain terms (JDK/primitive noise for CHD).
+_NON_DOMAIN = {
+    "void", "int", "long", "short", "byte", "float", "double", "boolean",
+    "char", "string", "list", "map", "set", "collection", "object",
+    "integer", "optional", "iterable",
+}
+
+
+def _published_ops(partition, calls):
+    """Operations of each partition invoked from OUTSIDE it.
+    calls: iterable of (caller_class, Operation)."""
+    ops = {cid: set() for cid in set(partition.values())}
+    for caller, op in calls:
+        ci, cj = partition.get(caller), partition.get(op.cls)
+        if ci is None or cj is None or ci == cj:
+            continue
+        ops[cj].add(op)
+    return ops
+
+
+def _pairwise_mean(ops, similarity):
+    """Mean of similarity over unordered op pairs; 1.0 below 2 ops (a
+    single-operation or unpublished interface is vacuously cohesive)."""
+    ops = sorted(ops, key=lambda o: (o.cls, o.name, o.params, o.returns))
+    if len(ops) < 2:
+        return 1.0
+    pairs = list(combinations(ops, 2))
+    return sum(similarity(a, b) for a, b in pairs) / len(pairs)
+
+
+def _jaccard(a, b):
+    a, b = set(a), set(b)
+    if not a and not b:
+        return 1.0
+    return len(a & b) / len(a | b)
+
+
+def chm(partition, calls):
+    """Cohesion at Message level: mean over partitions of the mean pairwise
+    f_msg = (Jaccard(returns) + Jaccard(params))/2 over the partition's
+    externally-invoked operations. Range [0,1], higher is better."""
+    def f_msg(a, b):
+        return (_jaccard({a.returns}, {b.returns}) + _jaccard(a.params, b.params)) / 2
+
+    ops = _published_ops(partition, calls)
+    return sum(_pairwise_mean(o, f_msg) for o in ops.values()) / len(ops)
+
+
+def _terms(op):
+    """Domain terms of an operation signature: camelCase tokens of the method
+    name plus simple names of param/return types, minus JDK/primitive noise."""
+    import re
+
+    words = []
+    names = [op.name] + [p.split(".")[-1] for p in op.params]
+    names.append(op.returns.split(".")[-1])
+    for name in names:
+        words.extend(re.findall(r"[A-Z]?[a-z0-9]+|[A-Z]+(?![a-z])", name))
+    return {w.lower() for w in words} - _NON_DOMAIN
+
+
+def chd(partition, calls):
+    """Cohesion at Domain level: like chm but f_dom = Jaccard of the domain
+    terms in the operation signatures. Range [0,1], higher is better."""
+    def f_dom(a, b):
+        return _jaccard(_terms(a), _terms(b))
+
+    ops = _published_ops(partition, calls)
+    return sum(_pairwise_mean(o, f_dom) for o in ops.values()) / len(ops)
+
+
+def bcp(partition, class_usecases, log=math.log):
+    """Business Context Purity: mean over partitions of the entropy of a
+    uniform distribution over the partition's use cases, i.e. log(m_i) with
+    m_i = |union of use-case labels of member classes| (0 if no labels).
+    Natural log by default. Lower is better."""
+    clusters = _clusters(partition)
+    total = 0.0
+    for members in clusters.values():
+        labels = set()
+        for c in members:
+            labels |= set(class_usecases.get(c, ()))
+        total += log(len(labels)) if labels else 0.0
+    return total / len(clusters)
+
+
 def load_partition_json(path):
     """Load {class_fqn: cluster_id} from a partition JSON file."""
     with open(path) as f:

@@ -38,6 +38,12 @@ literature):
 | **ICP** | Inter-Call Percentage — fraction of CALL-edge *weight* crossing partition boundaries | lower |
 | **IFN** | Interface Number — mean number of classes per partition that receive calls from outside it | lower |
 | **NED** | Non-Extreme Distribution — fraction of classes in reasonably-sized partitions (default bounds 5 ≤ size ≤ 20, configurable) | higher |
+| **BCP** | Business Context Purity — mean entropy ln(m_i) of use-case labels per partition | lower |
+| **CHM** | Cohesion at Message level — mean pairwise (Jaccard(returns)+Jaccard(params))/2 over each partition's externally-invoked operations | higher |
+| **CHD** | Cohesion at Domain level — same aggregation over signature domain terms | higher |
+
+CHM/CHD/BCP need method-level inputs: the extractor's `calls.csv` (callee signatures)
+and a class→use-case labeling (we use web entrypoints via CALL-reachability).
 
 ### Usage
 

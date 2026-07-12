@@ -89,9 +89,11 @@ public class Extractor {
                 td.findAll(MethodCallExpr.class).forEach(call -> {
                     totalCalls++;
                     try {
-                        ResolvedReferenceTypeDeclaration decl =
-                                call.resolve().declaringType();
-                        graph.addEdge(self, decl.getQualifiedName(), "CALL", 1);
+                        var method = call.resolve();
+                        String callee = method.declaringType().getQualifiedName();
+                        graph.addEdge(self, callee, "CALL", 1);
+                        graph.addCall(new Graph.Call(self, callee, method.getName(),
+                                paramTypes(method), method.getReturnType().describe()));
                     } catch (RuntimeException e) {
                         unresolvedCalls++;
                     }
@@ -99,8 +101,12 @@ public class Extractor {
                 td.findAll(ObjectCreationExpr.class).forEach(call -> {
                     totalCalls++;
                     try {
-                        graph.addEdge(self,
-                                call.resolve().declaringType().getQualifiedName(), "CALL", 1);
+                        var ctor = call.resolve();
+                        String callee = ctor.declaringType().getQualifiedName();
+                        graph.addEdge(self, callee, "CALL", 1);
+                        // constructors: method "<init>", "returns" the created type
+                        graph.addCall(new Graph.Call(self, callee, "<init>",
+                                paramTypes(ctor), callee));
                     } catch (RuntimeException e) {
                         unresolvedCalls++;
                     }
@@ -108,6 +114,17 @@ public class Extractor {
             }
         }
         return graph;
+    }
+
+    /** Parameter type descriptions joined with ';' (CSV-safe). */
+    private static String paramTypes(
+            com.github.javaparser.resolution.declarations.ResolvedMethodLikeDeclaration m) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < m.getNumberOfParams(); i++) {
+            if (i > 0) sb.append(';');
+            sb.append(m.getParam(i).getType().describe());
+        }
+        return sb.toString();
     }
 
     private Optional<String> resolve(ClassOrInterfaceType type) {
