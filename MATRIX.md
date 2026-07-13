@@ -34,6 +34,21 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 - *canonical*: mean of 10 stock runs; OUR full pipeline (extractor+adapter); NOT comparable to paper's acme (different AcmeAir variant: 84 vs 38 classes); protocol in runs/chgnn_tier2_pipeline.md
 - *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
 
+## CHGNN × compiere
+*dataset commit: `n/a` · date: 2026-07-13*
+
+| metric | n/a | published |
+|---|---|---|
+| SM ↑ | — | — |
+| ICP ↓ | — | — |
+| IFN ↓ | — | — |
+| NED ↑ | — | — |
+| BCP ↓ | — | — |
+| CHM ↑ | — | — |
+| CHD ↑ | — | — |
+
+- *n/a*: N/A for CHGNN (Swing desktop ERP - no web/service entrypoints for EP/PCC features). Literature uses Compiere v3.3 (1042-class subset); static tools (MicroMiner/MAGNET) may handle it - revisit for those rows
+
 ## CHGNN × daytrader
 *dataset commit: `bundled@f94803e` · date: 2026-07-13*
 
@@ -49,6 +64,21 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 
 - *canonical*: mean of 10 stock runs on authors' bundled inputs; authors' own results.txt (5 runs): IFN 5.7-6.7 matches THIS IFN variant and NED 0.48-0.63 matches; their recorded SM 0.014-0.056 is below both our variants - open question
 - *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
+
+## CHGNN × dietapp
+*dataset commit: `n/a` · date: 2026-07-13*
+
+| metric | n/a | published |
+|---|---|---|
+| SM ↑ | — | — |
+| ICP ↓ | — | — |
+| IFN ↓ | — | — |
+| NED ↑ | — | — |
+| BCP ↓ | — | — |
+| CHM ↑ | — | — |
+| CHD ↑ | — | — |
+
+- *n/a*: N/A (C# app - github.com/SebastianBienert/DietApp per CoGCN paper footnote; not parseable by JavaParser pipeline). CoGCN repo bundles preprocessed dietapp content/struct CSVs usable for tool-native cells
 
 ## CHGNN × fxml-pos
 *dataset commit: `1f3b5d15296da4e10411fb0a2790b5cf0ffd3765` · date: 2026-07-13*
@@ -127,4 +157,19 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 
 - *canonical*: mean of 10 stock runs; OUR full pipeline; 6 isolated bootstrap/config classes excluded via ignore_classes.txt; sparse-graph caveat in runs/chgnn_tier2_pipeline.md
 - *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
+
+## CHGNN × student-information-system
+*dataset commit: `n/a` · date: 2026-07-13*
+
+| metric | n/a | published |
+|---|---|---|
+| SM ↑ | — | — |
+| ICP ↓ | — | — |
+| IFN ↓ | — | — |
+| NED ↑ | — | — |
+| BCP ↓ | — | — |
+| CHM ↑ | — | — |
+| CHD ↑ | — | — |
+
+- *n/a*: N/A provisional (no canonical repo in the decomposition literature - checked CoGCN/CHGNN/Mono2Micro/MonoEmbed/MicroMiner/VAE-C papers; likely spreadsheet mislabel - team to trace provenance)
 
