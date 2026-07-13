@@ -71,7 +71,7 @@ class TestCallgraph:
 
     def test_dot_annotates_reachable_call_edges_per_entrypoint(self):
         dot = build_callgraph_dot(NODES, EDGES, ["E"])
-        ep = "{type: web, method: GET, uri: [/E], entry: E, entrydisplayname: E.call}"
+        ep = "{type: web, method: GET, uri: [/E], entry: E, entrydisplayname: E.call}"  # single-segment FQN
         assert f'"E.call" -> "[{ep}] E.call"' in dot
         assert f'"[{ep}] B.call" -> "[{ep}] C.call"' in dot
         # A is not reachable from E: its edges must not carry E's annotation
@@ -98,3 +98,12 @@ class TestDbJson:
         assert {"service_name": "B.call", "db_name": "account", "crud": "R"} in db
         assert {"service_name": "B.call", "db_name": "account", "crud": "U"} in db
         assert len(db) == 2
+
+
+class TestEntrypointUniqueness:
+    def test_same_simple_name_entrypoints_get_distinct_annotations(self):
+        # two controllers named PostController in different packages must not
+        # merge into one entrypoint (this truncated CHGNN's EP feature width)
+        service = build_service_json(["admin.PostController", "web.PostController"])
+        names = {s["service_entry_name"] for s in service}
+        assert len(names) == 2

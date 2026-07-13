@@ -77,9 +77,12 @@ def build_icu(nodes, edges):
 
 
 def _ep_annotation(entry_class):
+    """Annotation string must be unique per entrypoint CLASS — two classes
+    sharing a simple name (admin/web PostController) would otherwise merge
+    into one entrypoint and silently shrink CHGNN's EP feature width."""
     short = entry_class.split(".")[-1]
     return ("{type: web, method: GET, uri: [/%s], entry: %s, "
-            "entrydisplayname: %s.call}" % (short, short, short))
+            "entrydisplayname: %s.call}" % (short, entry_class, entry_class))
 
 
 # edge types that carry call-graph reachability: real calls plus FIELD (DI
