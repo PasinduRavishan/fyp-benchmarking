@@ -50,6 +50,36 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 - *canonical*: mean of 10 stock runs on authors' bundled inputs; authors' own results.txt (5 runs): IFN 5.7-6.7 matches THIS IFN variant and NED 0.48-0.63 matches; their recorded SM 0.014-0.056 is below both our variants - open question
 - *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
 
+## CHGNN × fxml-pos
+*dataset commit: `1f3b5d15296da4e10411fb0a2790b5cf0ffd3765` · date: 2026-07-13*
+
+| metric | n/a | published |
+|---|---|---|
+| SM ↑ | — | — |
+| ICP ↓ | — | — |
+| IFN ↓ | — | — |
+| NED ↑ | — | — |
+| BCP ↓ | — | — |
+| CHM ↑ | — | — |
+| CHD ↑ | — | — |
+
+- *n/a*: N/A (incompatible): desktop JavaFX app with no web/service entrypoints; CHGNN's EP/PCC features and seed protocol are entrypoint-based - verified by cloning (FXML views only)
+
+## CHGNN × genapp
+*dataset commit: `f6f3f4b2580d31b7d8dcc31ce3e3676f4cceaaaa` · date: 2026-07-13*
+
+| metric | n/a | published |
+|---|---|---|
+| SM ↑ | — | — |
+| ICP ↓ | — | — |
+| IFN ↓ | — | — |
+| NED ↑ | — | — |
+| BCP ↓ | — | — |
+| CHM ↑ | — | — |
+| CHD ↑ | — | — |
+
+- *n/a*: N/A (incompatible): CICS COBOL application with zero Java sources - verified by cloning; outside JavaParser extractor scope
+
 ## CHGNN × jpetstore
 *dataset commit: `ebbd98ae92271c8dfa951d2fef518ba12877bf53` · date: 2026-07-12*
 
