@@ -51,7 +51,42 @@ def main(argv=None):
     node_to_idx = {node: i for i, node in enumerate(nodes)}
 
     # 1. Identify entrypoints
-    entrypoints = sorted([n for n in nodes if n.lower().endswith("controller") or n.lower().endswith("action")])
+    extends_relations = {}
+    for src, dst, etype, _ in edges:
+        if etype in ("EXTENDS", "IMPLEMENTS"):
+            extends_relations.setdefault(src, set()).add(dst)
+
+    def inherits_from(cls, target_parents):
+        visited = set()
+        queue = [cls]
+        while queue:
+            curr = queue.pop(0)
+            if curr in target_parents:
+                return True
+            for parent in extends_relations.get(curr, []):
+                if parent not in visited:
+                    visited.add(parent)
+                    queue.append(parent)
+        return False
+
+    target_parents = {
+        "org.apache.roller.weblogger.ui.struts2.util.UIAction",
+        "javax.servlet.http.HttpServlet",
+        "jakarta.servlet.http.HttpServlet"
+    }
+
+    entrypoints_set = set()
+    for n in nodes:
+        is_ep = (
+            n.lower().endswith("controller") or 
+            n.lower().endswith("action") or 
+            n.lower().endswith("servlet") or 
+            inherits_from(n, target_parents)
+        )
+        if is_ep and not n.endswith("UIAction") and not n.endswith("BaseServlet") and not n.endswith("HttpServlet"):
+            entrypoints_set.add(n)
+            
+    entrypoints = sorted(list(entrypoints_set))
     n_entrypoints = len(entrypoints)
     ep_to_idx = {ep: i for i, ep in enumerate(entrypoints)}
 
