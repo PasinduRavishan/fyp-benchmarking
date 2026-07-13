@@ -39,13 +39,13 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 
 | metric | n/a | published |
 |---|---|---|
-| SM ↑ | — | — |
-| ICP ↓ | — | — |
-| IFN ↓ | — | — |
-| NED ↑ | — | — |
-| BCP ↓ | — | — |
-| CHM ↑ | — | — |
-| CHD ↑ | — | — |
+| SM ↑ | N/A | N/A |
+| ICP ↓ | N/A | N/A |
+| IFN ↓ | N/A | N/A |
+| NED ↑ | N/A | N/A |
+| BCP ↓ | N/A | — |
+| CHM ↑ | N/A | — |
+| CHD ↑ | N/A | — |
 
 - *n/a*: N/A for CHGNN (Swing desktop ERP - no web/service entrypoints for EP/PCC features). Literature uses Compiere v3.3 (1042-class subset); static tools (MicroMiner/MAGNET) may handle it - revisit for those rows
 
@@ -70,13 +70,13 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 
 | metric | n/a | published |
 |---|---|---|
-| SM ↑ | — | — |
-| ICP ↓ | — | — |
-| IFN ↓ | — | — |
-| NED ↑ | — | — |
-| BCP ↓ | — | — |
-| CHM ↑ | — | — |
-| CHD ↑ | — | — |
+| SM ↑ | N/A | N/A |
+| ICP ↓ | N/A | N/A |
+| IFN ↓ | N/A | N/A |
+| NED ↑ | N/A | N/A |
+| BCP ↓ | N/A | — |
+| CHM ↑ | N/A | — |
+| CHD ↑ | N/A | — |
 
 - *n/a*: N/A (C# app - github.com/SebastianBienert/DietApp per CoGCN paper footnote; not parseable by JavaParser pipeline). CoGCN repo bundles preprocessed dietapp content/struct CSVs usable for tool-native cells
 
@@ -85,13 +85,13 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 
 | metric | n/a | published |
 |---|---|---|
-| SM ↑ | — | — |
-| ICP ↓ | — | — |
-| IFN ↓ | — | — |
-| NED ↑ | — | — |
-| BCP ↓ | — | — |
-| CHM ↑ | — | — |
-| CHD ↑ | — | — |
+| SM ↑ | N/A | N/A |
+| ICP ↓ | N/A | N/A |
+| IFN ↓ | N/A | N/A |
+| NED ↑ | N/A | N/A |
+| BCP ↓ | N/A | — |
+| CHM ↑ | N/A | — |
+| CHD ↑ | N/A | — |
 
 - *n/a*: N/A (incompatible): desktop JavaFX app with no web/service entrypoints; CHGNN's EP/PCC features and seed protocol are entrypoint-based - verified by cloning (FXML views only)
 
@@ -100,13 +100,13 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 
 | metric | n/a | published |
 |---|---|---|
-| SM ↑ | — | — |
-| ICP ↓ | — | — |
-| IFN ↓ | — | — |
-| NED ↑ | — | — |
-| BCP ↓ | — | — |
-| CHM ↑ | — | — |
-| CHD ↑ | — | — |
+| SM ↑ | N/A | N/A |
+| ICP ↓ | N/A | N/A |
+| IFN ↓ | N/A | N/A |
+| NED ↑ | N/A | N/A |
+| BCP ↓ | N/A | — |
+| CHM ↑ | N/A | — |
+| CHD ↑ | N/A | — |
 
 - *n/a*: N/A (incompatible): CICS COBOL application with zero Java sources - verified by cloning; outside JavaParser extractor scope
 
@@ -163,13 +163,13 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 
 | metric | n/a | published |
 |---|---|---|
-| SM ↑ | — | — |
-| ICP ↓ | — | — |
-| IFN ↓ | — | — |
-| NED ↑ | — | — |
-| BCP ↓ | — | — |
-| CHM ↑ | — | — |
-| CHD ↑ | — | — |
+| SM ↑ | N/A | N/A |
+| ICP ↓ | N/A | N/A |
+| IFN ↓ | N/A | N/A |
+| NED ↑ | N/A | N/A |
+| BCP ↓ | N/A | — |
+| CHM ↑ | N/A | — |
+| CHD ↑ | N/A | — |
 
 - *n/a*: N/A provisional (no canonical repo in the decomposition literature - checked CoGCN/CHGNN/Mono2Micro/MonoEmbed/MicroMiner/VAE-C papers; likely spreadsheet mislabel - team to trace provenance)
 
