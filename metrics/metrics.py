@@ -397,7 +397,7 @@ def get_reachable_classes(entrypoint, call_edges_dict):
 def compute_bcp(partition, edges, entrypoints=None):
     """Compute Business Cohesion of Partition (BCP). Returns uniform and entropy variants."""
     if entrypoints is None:
-        entrypoints = [cls for cls in partition.keys() if cls.lower().endswith('controller') or cls.lower().endswith('action')]
+        entrypoints = [cls for cls in partition.keys() if cls.lower().endswith('controller') or cls.lower().endswith('action') or cls.lower().endswith('rest')]
 
     call_edges_dict = {}
     for e in edges:

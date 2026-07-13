@@ -81,6 +81,7 @@ def main(argv=None):
             n.lower().endswith("controller") or 
             n.lower().endswith("action") or 
             n.lower().endswith("servlet") or 
+            n.lower().endswith("rest") or 
             inherits_from(n, target_parents)
         )
         if is_ep and not n.endswith("UIAction") and not n.endswith("BaseServlet") and not n.endswith("HttpServlet"):
