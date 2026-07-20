@@ -88,6 +88,16 @@ def main(argv=None):
         if is_ep and not n.endswith("UIAction") and not n.endswith("BaseServlet") and not n.endswith("HttpServlet") and not n.endswith("AbstractActionBean"):
             entrypoints_set.add(n)
             
+    if not entrypoints_set:
+        # Fallback: identify root nodes (0 in-degree in CALL graph) or test drivers as entrypoints
+        in_degrees = {n: 0 for n in nodes}
+        for src, dst, etype, _ in edges:
+            if etype == "CALL" and dst in in_degrees:
+                in_degrees[dst] += 1
+        for n, in_deg in in_degrees.items():
+            if in_deg == 0 or n.startswith("LGTEST") or n.startswith("LGWEB") or n.startswith("LGSETUP"):
+                entrypoints_set.add(n)
+
     entrypoints = sorted(list(entrypoints_set))
     n_entrypoints = len(entrypoints)
     ep_to_idx = {ep: i for i, ep in enumerate(entrypoints)}

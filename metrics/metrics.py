@@ -396,13 +396,19 @@ def get_reachable_classes(entrypoint, call_edges_dict):
 
 def compute_bcp(partition, edges, entrypoints=None):
     """Compute Business Cohesion of Partition (BCP). Returns uniform and entropy variants."""
-    if entrypoints is None:
-        entrypoints = [cls for cls in partition.keys() if cls.lower().endswith('controller') or cls.lower().endswith('action') or cls.lower().endswith('actionbean') or cls.lower().endswith('servlet') or cls.lower().endswith('rest')]
-
     call_edges_dict = {}
     for e in edges:
         if e.type == "CALL":
             call_edges_dict.setdefault(e.src, []).append(e.dst)
+
+    if entrypoints is None or len(entrypoints) == 0:
+        entrypoints = [cls for cls in partition.keys() if cls.lower().endswith('controller') or cls.lower().endswith('action') or cls.lower().endswith('actionbean') or cls.lower().endswith('servlet') or cls.lower().endswith('rest')]
+        if not entrypoints:
+            in_degrees = {n: 0 for n in partition.keys()}
+            for e in edges:
+                if e.type == "CALL" and e.dst in in_degrees:
+                    in_degrees[e.dst] += 1
+            entrypoints = [n for n, in_deg in in_degrees.items() if in_deg == 0 or n.startswith("LGTEST") or n.startswith("LGWEB") or n.startswith("LGSETUP") or n.startswith("LGASTAT")]
 
     reachable_classes = {}
     for ep in entrypoints:
