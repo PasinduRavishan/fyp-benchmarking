@@ -18,98 +18,6 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 - *canonical*: mean of 10 unseeded stock runs; spread in runs/chgnn_acme_reproducibility.md; published IFN matches THIS variant; CHM/CHD N/A: released acme data has no param/return types; BCP use case = entrypoint from released callgraph.dot annotations
 - *chgnn-repo*: mean of 10 unseeded stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py; published SM matches THIS variant
 
-## CHGNN × acmeair
-*dataset commit: `f16122729873ef0449ea276dfb2d2a1d45bebb40` · date: 2026-07-13*
-
-| metric | canonical | chgnn-repo | published |
-|---|---|---|---|
-| SM ↑ | 0.0683 | 0.1544 | — |
-| ICP ↓ | 0.3759 | — | — |
-| IFN ↓ | 5.43 | 12.88 | — |
-| NED ↑ | 0.652 | 0.844 | — |
-| BCP ↓ | 1.0813 | — | — |
-| CHM ↑ | 0.3469 | — | — |
-| CHD ↑ | 0.1824 | — | — |
-
-- *canonical*: mean of 10 stock runs; OUR full pipeline (extractor+adapter); NOT comparable to paper's acme (different AcmeAir variant: 84 vs 38 classes); protocol in runs/chgnn_tier2_pipeline.md
-- *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
-
-## CHGNN × compiere
-*dataset commit: `n/a` · date: 2026-07-13*
-
-| metric | n/a | published |
-|---|---|---|
-| SM ↑ | N/A | N/A |
-| ICP ↓ | N/A | N/A |
-| IFN ↓ | N/A | N/A |
-| NED ↑ | N/A | N/A |
-| BCP ↓ | N/A | — |
-| CHM ↑ | N/A | — |
-| CHD ↑ | N/A | — |
-
-- *n/a*: N/A for CHGNN (Swing desktop ERP - no web/service entrypoints for EP/PCC features). Literature uses Compiere v3.3 (1042-class subset); static tools (MicroMiner/MAGNET) may handle it - revisit for those rows
-
-## CHGNN × daytrader
-*dataset commit: `bundled@f94803e` · date: 2026-07-13*
-
-| metric | canonical | chgnn-repo | published |
-|---|---|---|---|
-| SM ↑ | 0.0883 | 0.1632 | — |
-| ICP ↓ | 0.5636 | — | — |
-| IFN ↓ | 5.53 | 25.05 | — |
-| NED ↑ | 0.507 | 0.555 | — |
-| BCP ↓ | 4.4972 | — | — |
-| CHM ↑ | — | — | — |
-| CHD ↑ | — | — | — |
-
-- *canonical*: mean of 10 stock runs on authors' bundled inputs; authors' own results.txt (5 runs): IFN 5.7-6.7 matches THIS IFN variant and NED 0.48-0.63 matches; their recorded SM 0.014-0.056 is below both our variants - open question
-- *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
-
-## CHGNN × dietapp
-*dataset commit: `n/a` · date: 2026-07-13*
-
-| metric | n/a | published |
-|---|---|---|
-| SM ↑ | N/A | N/A |
-| ICP ↓ | N/A | N/A |
-| IFN ↓ | N/A | N/A |
-| NED ↑ | N/A | N/A |
-| BCP ↓ | N/A | — |
-| CHM ↑ | N/A | — |
-| CHD ↑ | N/A | — |
-
-- *n/a*: N/A (C# app - github.com/SebastianBienert/DietApp per CoGCN paper footnote; not parseable by JavaParser pipeline). CoGCN repo bundles preprocessed dietapp content/struct CSVs usable for tool-native cells
-
-## CHGNN × fxml-pos
-*dataset commit: `1f3b5d15296da4e10411fb0a2790b5cf0ffd3765` · date: 2026-07-13*
-
-| metric | n/a | published |
-|---|---|---|
-| SM ↑ | N/A | N/A |
-| ICP ↓ | N/A | N/A |
-| IFN ↓ | N/A | N/A |
-| NED ↑ | N/A | N/A |
-| BCP ↓ | N/A | — |
-| CHM ↑ | N/A | — |
-| CHD ↑ | N/A | — |
-
-- *n/a*: N/A (incompatible): desktop JavaFX app with no web/service entrypoints; CHGNN's EP/PCC features and seed protocol are entrypoint-based - verified by cloning (FXML views only)
-
-## CHGNN × genapp
-*dataset commit: `f6f3f4b2580d31b7d8dcc31ce3e3676f4cceaaaa` · date: 2026-07-13*
-
-| metric | n/a | published |
-|---|---|---|
-| SM ↑ | N/A | N/A |
-| ICP ↓ | N/A | N/A |
-| IFN ↓ | N/A | N/A |
-| NED ↑ | N/A | N/A |
-| BCP ↓ | N/A | — |
-| CHM ↑ | N/A | — |
-| CHD ↑ | N/A | — |
-
-- *n/a*: N/A (incompatible): CICS COBOL application with zero Java sources - verified by cloning; outside JavaParser extractor scope
-
 ## CHGNN × jpetstore
 *dataset commit: `ebbd98ae92271c8dfa951d2fef518ba12877bf53` · date: 2026-07-12*
 
@@ -142,34 +50,228 @@ Values are means over 10 stock runs (protocol in runs/). `canonical` = our metri
 - *canonical*: mean of 10 stock runs on authors' bundled pbw inputs; CHM/CHD N/A (no signatures in bundled data); BCP from callgraph.dot entrypoint labels
 - *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
 
-## CHGNN × spring-petclinic
-*dataset commit: `51045d1648dad955df586150c1a1a6e22ef400c2` · date: 2026-07-13*
+## FoSCI × acmeair
+*dataset commit: `master@pinned` · date: 2026-07-29*
 
-| metric | canonical | chgnn-repo | published |
-|---|---|---|---|
-| SM ↑ | 0.1787 | 0.2616 | — |
-| ICP ↓ | 0.1702 | — | — |
-| IFN ↓ | 1.67 | 2.30 | — |
-| NED ↑ | 0.971 | 0.867 | — |
-| BCP ↓ | 0.7420 | — | — |
-| CHM ↑ | 0.7000 | — | — |
-| CHD ↑ | 0.7429 | — | — |
-
-- *canonical*: mean of 10 stock runs; OUR full pipeline; 6 isolated bootstrap/config classes excluded via ignore_classes.txt; sparse-graph caveat in runs/chgnn_tier2_pipeline.md
-- *chgnn-repo*: mean of 10 stock runs; undirected SM / relative NED / cross-edge IFN per released metric.py
-
-## CHGNN × student-information-system
-*dataset commit: `n/a` · date: 2026-07-13*
-
-| metric | n/a | published |
+| metric | canonical | published |
 |---|---|---|
-| SM ↑ | N/A | N/A |
-| ICP ↓ | N/A | N/A |
-| IFN ↓ | N/A | N/A |
-| NED ↑ | N/A | N/A |
-| BCP ↓ | N/A | — |
-| CHM ↑ | N/A | — |
-| CHD ↑ | N/A | — |
+| SM ↑ | 0.0456 | — |
+| ICP ↓ | 0.0608 | — |
+| IFN ↓ | 0.6667 | — |
+| NED ↑ | 0.2143 | — |
+| BCP ↓ | 1.3143 | — |
+| CHM ↑ | 0.8517 | — |
+| CHD ↑ | 0.7780 | — |
 
-- *n/a*: N/A provisional (no canonical repo in the decomposition literature - checked CoGCN/CHGNN/Mono2Micro/MonoEmbed/MicroMiner/VAE-C papers; likely spreadsheet mislabel - team to trace provenance)
+- *canonical*: FoSCI multi-sourced feature space clustering (K=12)
+
+## FoSCI × autocare-nepal
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0244 | — |
+| ICP ↓ | 0.0000 | — |
+| IFN ↓ | 0.0000 | — |
+| NED ↑ | 0.0000 | — |
+| BCP ↓ | 0.5142 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=12)
+
+## FoSCI × bearboard
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0897 | — |
+| ICP ↓ | 0.0000 | — |
+| IFN ↓ | 0.0000 | — |
+| NED ↑ | 0.7647 | — |
+| BCP ↓ | 1.4509 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=8)
+
+## FoSCI × compiere-330
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0065 | — |
+| ICP ↓ | 0.0000 | — |
+| IFN ↓ | 0.0000 | — |
+| NED ↑ | 0.0251 | — |
+| BCP ↓ | 3.6189 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=12)
+
+## FoSCI × daytrader
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0019 | — |
+| ICP ↓ | 0.0000 | — |
+| IFN ↓ | 0.0000 | — |
+| NED ↑ | 0.0000 | — |
+| BCP ↓ | 0.5584 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=12)
+
+## FoSCI × diet-app
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.2277 | — |
+| ICP ↓ | 0.3046 | — |
+| IFN ↓ | 1.7500 | — |
+| NED ↑ | 0.7083 | — |
+| BCP ↓ | 1.5752 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=12)
+
+## FoSCI × genapp
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0774 | — |
+| ICP ↓ | 0.1481 | — |
+| IFN ↓ | 0.4286 | — |
+| NED ↑ | 0.6452 | — |
+| BCP ↓ | 1.1296 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=7)
+
+## FoSCI × jforum
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0020 | — |
+| ICP ↓ | 0.0001 | — |
+| IFN ↓ | 0.9167 | — |
+| NED ↑ | 0.0000 | — |
+| BCP ↓ | 0.6263 | — |
+| CHM ↑ | 0.9384 | — |
+| CHD ↑ | 0.9197 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=12)
+
+## FoSCI × jpetstore
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.1526 | — |
+| ICP ↓ | 0.0888 | — |
+| IFN ↓ | 2.2500 | — |
+| NED ↑ | 0.7500 | — |
+| BCP ↓ | 1.6786 | — |
+| CHM ↑ | 0.8214 | — |
+| CHD ↑ | 0.6245 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=4)
+
+## FoSCI × pharmacy
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0255 | — |
+| ICP ↓ | 0.0000 | — |
+| IFN ↓ | 0.0000 | — |
+| NED ↑ | 0.1356 | — |
+| BCP ↓ | 0.7768 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=12)
+
+## FoSCI × plantsbywebsphere
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0612 | — |
+| ICP ↓ | 0.1333 | — |
+| IFN ↓ | 0.7778 | — |
+| NED ↑ | 0.0000 | — |
+| BCP ↓ | 0.8095 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=9)
+
+## FoSCI × pos-system
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0377 | — |
+| ICP ↓ | 0.0000 | — |
+| IFN ↓ | 0.0000 | — |
+| NED ↑ | 0.0000 | — |
+| BCP ↓ | 0.8305 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=8)
+
+## FoSCI × roller
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0518 | — |
+| ICP ↓ | 0.0000 | — |
+| IFN ↓ | 1.5833 | — |
+| NED ↑ | 0.0217 | — |
+| BCP ↓ | 1.1202 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=12)
+
+## FoSCI × spring-petclinic
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0203 | — |
+| ICP ↓ | 0.0000 | — |
+| IFN ↓ | 0.0000 | — |
+| NED ↑ | 0.7600 | — |
+| BCP ↓ | 0.8747 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=6)
+
+## FoSCI × train-ticket
+*dataset commit: `master@pinned` · date: 2026-07-29*
+
+| metric | canonical | published |
+|---|---|---|
+| SM ↑ | 0.0512 | — |
+| ICP ↓ | 0.0000 | — |
+| IFN ↓ | 0.0000 | — |
+| NED ↑ | 0.0796 | — |
+| BCP ↓ | 2.5755 | — |
+| CHM ↑ | 1.0000 | — |
+| CHD ↑ | 1.0000 | — |
+
+- *canonical*: FoSCI multi-sourced feature space clustering (K=12)
 

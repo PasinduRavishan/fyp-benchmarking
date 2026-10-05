@@ -1,0 +1,18 @@
+{
+  "org.mybatis.jpetstore.domain.Account": 3,
+  "org.mybatis.jpetstore.domain.Cart": 1,
+  "org.mybatis.jpetstore.domain.CartItem": 1,
+  "org.mybatis.jpetstore.domain.Category": 2,
+  "org.mybatis.jpetstore.domain.Item": 1,
+  "org.mybatis.jpetstore.domain.LineItem": 0,
+  "org.mybatis.jpetstore.domain.Order": 0,
+  "org.mybatis.jpetstore.domain.Product": 1,
+  "org.mybatis.jpetstore.domain.Sequence": 0,
+  "org.mybatis.jpetstore.service.AccountService": 3,
+  "org.mybatis.jpetstore.service.CatalogService": 1,
+  "org.mybatis.jpetstore.service.OrderService": 0,
+  "org.mybatis.jpetstore.web.actions.AccountActionBean": 3,
+  "org.mybatis.jpetstore.web.actions.CartActionBean": 1,
+  "org.mybatis.jpetstore.web.actions.CatalogActionBean": 1,
+  "org.mybatis.jpetstore.web.actions.OrderActionBean": 0
+}

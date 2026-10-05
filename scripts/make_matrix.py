@@ -47,9 +47,10 @@ def main():
                 out.append(f"- *{r['metric_variant']}*: {r['notes']}")
         out.append("")
 
-    with open("MATRIX.md", "w") as f:
+    with open("MATRIX.md", "w", encoding="utf-8") as f:
         f.write("\n".join(out) + "\n")
     print(f"MATRIX.md: {len(cells)} cells")
+
 
 
 if __name__ == "__main__":
